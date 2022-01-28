@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy version="1.0">
+   <org>IBM</org>
+   <startDate>2021-05-01</startDate>
+   <endDate>2022-05-01</endDate>
+   <namespace>REDBOOK</namespace>
+   <description>Redbook Policy</description>
+   <dataElements>
+      <dataElement encryptedDataObjectName="CN" columnMatch="CUSTOMER_NUM">
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname1</keySetName>
+               <keyName>keyname1</keyName>
+               <referentialIntegrityKeySetName>setcust1</referentialIntegrityKeySetName>
+               <referentialIntegrityKeyName>keycust1</referentialIntegrityKeyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="MKT" method="Clear" />
+         </maskingByPersona>
+      </dataElement>
+      <dataElement encryptedDataObjectName="PN" columnMatch="PRODUCT_NUM">
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname3</keySetName>
+               <keyName>keyname3</keyName>
+               <referentialIntegrityKeySetName>setprod1</referentialIntegrityKeySetName>
+               <referentialIntegrityKeyName>keyprod1</referentialIntegrityKeyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="MKT" method="Clear" />
+            <mask personaName="ACT" method="Clear" />
+            <mask personaName="AGT" method="Clear" />
+         </maskingByPersona>
+      </dataElement>
+      <dataElement encryptedDataObjectName="CCN" columnMatch="CREDIT_CARD_NUM">
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname4</keySetName>
+               <keyName>keyname4</keyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="AGT" method="Replace">
+               <suffixLength>4</suffixLength>
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+         </maskingByPersona>
+      </dataElement>
+      <dataElement encryptedDataObjectName="FN" columnMatch="FIRSTNAME">
+         Appendix C. Example Hyper Protect Data Controller policy 263
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname5</keySetName>
+               <keyName>keyname5</keyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="MKT" method="Clear" />
+            <mask personaName="AGT" method="Clear" />
+         </maskingByPersona>
+      </dataElement>
+      <dataElement encryptedDataObjectName="LN" columnMatch="LASTNAME">
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname6</keySetName>
+               <keyName>keyname6</keyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="MKT" method="Clear" />
+            <mask personaName="AGT" method="Clear" />
+         </maskingByPersona>
+      </dataElement>
+      <dataElement encryptedDataObjectName="PHN" columnMatch="PHONE_NUM">
+         <encryptionByPersona>
+            <encryption personaName="default" method="Local">
+               <keySetName>setname7</keySetName>
+               <keyName>keyname7</keyName>
+            </encryption>
+         </encryptionByPersona>
+         <maskingByPersona>
+            <mask personaName="default" method="Replace">
+               <rules>
+                  <rule match="[0-9]" replace="9" />
+                  <rule match="[A-Za-z]" replace="X" />
+                  <rule match="[^9X]" replace="' '" />
+               </rules>
+            </mask>
+            <mask personaName="MKT" method="Clear" />
+            <mask personaName="AGT" method="Clear" />
+         </maskingByPersona>
+      </dataElement>
+   </dataElements>
+   <personas>
+      <persona personaName="DPO" description="Data Policy Owner">
+         <groups>
+            <group>@DCDPO</group>
+         </groups>
+      </persona>
+      <persona personaName="DA" description="Data Administrator">
+         <groups>
+            <group>@DCDA</group>
+         </groups>
+      </persona>
+      <persona personaName="AGT" description="Call Center Agent">
+         <defaultConnection>pgs</defaultConnection>
+         <groups>
+            <group>@DCAGT</group>
+         </groups>
+      </persona>
+      <persona personaName="MKT" description="Marketing">
+         <defaultConnection>pgs</defaultConnection>
+         <groups>
+            <group>@DCMKT</group>
+         </groups>
+      </persona>
+      <persona personaName="ACT" description="Accounting">
+         <defaultConnection>pgs</defaultConnection>
+         <groups>
+            <group>@DCACT</group>
+         </groups>
+      </persona>
+      <persona personaName="DCA" description="Data Controller Admin">
+         <groups>
+            <group>@DCDCA</group>
+         </groups>
+      </persona>
+      <persona personaName="TZ" description="Trust Zone" />
+   </personas>
+   <custodianGroups>
+      <custodianGroup groupID="1" group="@DCDPO" />
+   </custodianGroups>
+   <connections>
+      <connection name="db2">
+         <source url="jdbc:db2://192.168.48.122:5446/DB1ABAC" driver="com.ibm.db2.jcc.DB2Driver" user="mweiss" password="db2_pwd" dbSchema="REDBOOK" />
+      </connection>
+      <connection name="pgs">
+         <aliases>
+            <alias>redbook</alias>
+            Appendix C. Example Hyper Protect Data Controller policy 265
+         </aliases>
+         <source url="jdbc:postgresql://192.168.48.132:5432/dppdb" driver="org.postgresql.Driver" user="dppuser" password="pgs_pwd" dbSchema="REDBOOK" />
+      </connection>
+   </connections>
+</policy>
